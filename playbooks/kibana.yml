@@ -33,12 +33,19 @@
         regexp: 'server.host'
         line: 'server.host: "0.0.0.0"'
     
+    - name: Update Kibana Config (Kibana Port)
+      become: yes
+      lineinfile:
+        destfile: /etc/kibana/kibana.yml
+        regexp: 'server.port'
+        line: 'server.port: 5601'
+    
     - name: Update Kibana Config (Kibana URL)
       become: yes
       lineinfile:
         destfile: /etc/kibana/kibana.yml
         regexp: 'elasticsearch.hosts'
-        line: 'elasticsearch.hosts: ["http://192.168.28.71:9200"]'
+        line: 'elasticsearch.hosts: ["http://pri_ip_es:9200"]'
     
     - name: Start Kibana Service
       become: yes

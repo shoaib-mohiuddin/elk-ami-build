@@ -45,7 +45,14 @@
     - name: Updating Elastic Config (Cluster Initial Master Nodes)
       lineinfile:
         destfile: /etc/elasticsearch/elasticsearch.yml
-        line: 'cluster.initial_master_nodes: ["node-1"]'   
+        regexp: 'cluster.initial_master_nodes'
+        line: 'cluster.initial_master_nodes: ["pri_ip_es"]'   
+    
+    - name: Updating Elastic Config (Discovery Seed Hosts)
+      lineinfile:
+        destfile: /etc/elasticsearch/elasticsearch.yml
+        regexp: 'discovery.seed_hosts'
+        line: 'discovery.seed_hosts: ["pri_ip_es"]'
      
     # - name: Enable ElasticSearch Service
     #   service:

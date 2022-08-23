@@ -39,12 +39,13 @@
          marker: ""
          block: |
            input {
-             beats {
-               port => 5044
+             file {
+              path => "//pri_ip_filebeat/e$/*.log"
+             start_position => "beginning"
              }
            }
            output {
-             elasticsearch { hosts => ["192.168.28.71:9200"]
+             elasticsearch { hosts => ["pri_ip_es:9200"]
              }
            }
     

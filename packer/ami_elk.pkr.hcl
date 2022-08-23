@@ -21,15 +21,15 @@ variable "region" {
 }
 variable "vpc_id" {
   type = string
-  default = "vpc-02438ee05072e2657"
+  default = "vpc-052fd38bb0fcfd581"
 }
 variable "subnet_id" {
   type = string
-  default = "subnet-0a4cc8f32b36ba8af"
+  default = "subnet-02ba0e7a1b4cd8cd1"
 }
 variable "security_group_id" {
   type = string
-  default = "sg-0d2c5855376743111"
+  default = "sg-0e68c62e0f7961cdc"
 }
 
 locals {
