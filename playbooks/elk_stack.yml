@@ -1,0 +1,46 @@
+---
+- hosts: default
+  become: true
+
+  tasks:
+    - name: update the apt-get
+      apt:
+        update_cache: yes
+    
+    - name: install java
+      apt:
+        name: default-jre
+
+    - name: Add apt signing key to keyring file
+      apt_key:
+        url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+        state: present
+        
+    - name: Install transport
+      apt:
+        name: apt-transport-https
+        state: present
+
+    - name: Adding APT repository
+      apt_repository:
+        repo: deb https://artifacts.elastic.co/packages/7.x/apt stable main
+        state: present
+        filename: elastic-7.x.list
+        update_cache: yes
+
+    - name: Update repositories cache and install {{ stack }}
+      apt:
+        name: "{{ stack }}"
+        update_cache: yes
+      
+    - name: Enabling {{ stack }} service
+      service:
+        name: "{{ stack }}"
+        enabled: yes
+        daemon_reload: yes
+        
+    - name: Starting {{ stack }} service
+      service:
+        name: "{{ stack }}"
+        state: started
+        

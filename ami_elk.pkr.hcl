@@ -8,28 +8,43 @@ packer {
 }
 
 variable "ami_prefix" {
-  type = string
+  type    = string
   default = "ami-ubuntu"
 }
 variable "instance_type" {
-  type = string
+  type    = string
   default = "t3.large"
 }
 variable "region" {
-  type = string
+  type    = string
   default = "us-west-2"
 }
 variable "vpc_id" {
-  type = string
-  default = "vpc-052fd38bb0fcfd581"
+  type    = string
+  default = "vpc-075c72ca395eea4c4"
 }
 variable "subnet_id" {
-  type = string
-  default = "subnet-02ba0e7a1b4cd8cd1"
+  type    = string
+  default = "subnet-0e62040d590eb9790"
 }
 variable "security_group_id" {
-  type = string
-  default = "sg-0e68c62e0f7961cdc"
+  type    = string
+  default = "sg-0a66c9963414dcdb2"
+}
+
+variable "stack_e" {
+  type    = string
+  default = "elasticsearch"
+}
+
+variable "stack_l" {
+  type    = string
+  default = "logstash"
+}
+
+variable "stack_k" {
+  type    = string
+  default = "kibana"
 }
 
 locals {
@@ -69,7 +84,8 @@ build {
     "source.amazon-ebs.elasticsearch"
   ]
   provisioner "ansible" {
-    playbook_file = "./playbooks/elasticsearch.yml"
+    playbook_file   = "./playbooks/elk_stack.yml"
+    extra_arguments = ["--extra-vars", "stack=${var.stack_e}"]
   }
 
 }
@@ -106,7 +122,8 @@ build {
     "source.amazon-ebs.logstash"
   ]
   provisioner "ansible" {
-    playbook_file = "./playbooks/logstash.yml"
+    playbook_file   = "./playbooks/elk_stack.yml"
+    extra_arguments = ["--extra-vars", "stack=${var.stack_l}"]
   }
 
 }
@@ -143,7 +160,8 @@ build {
     "source.amazon-ebs.kibana"
   ]
   provisioner "ansible" {
-    playbook_file = "./playbooks/kibana.yml"
+    playbook_file   = "./playbooks/elk_stack.yml"
+    extra_arguments = ["--extra-vars", "stack=${var.stack_k}"]
   }
 
 }

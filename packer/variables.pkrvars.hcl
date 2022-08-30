@@ -1,6 +1,0 @@
-ami_prefix        = "ami-ubuntu"
-instance_type = "t3.large"
-region = "us-west-2"
-vpc_id            = "vpc-052fd38bb0fcfd581"
-subnet_id         = "subnet-02ba0e7a1b4cd8cd1"
-security_group_id = "sg-0e68c62e0f7961cdc"
