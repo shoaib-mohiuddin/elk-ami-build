@@ -3,43 +3,53 @@
   become: true
 
   tasks:
-    - name: update the apt-get
+    - name: update apt 
       apt:
         update_cache: yes
     
-    - name: install java
+    - name: Install java runtime environment
       apt:
         name: default-jre
+        state: present
 
     - name: Add apt signing key to keyring file
       apt_key:
         url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
         state: present
         
-    - name: Install transport
+    - name: Install apt transport
       apt:
         name: apt-transport-https
         state: present
 
-    - name: Adding APT repository
+    - name: Add APT repository
       apt_repository:
-        repo: deb https://artifacts.elastic.co/packages/7.x/apt stable main
+        repo: deb https://artifacts.elastic.co/packages/8.x/apt stable main
         state: present
-        filename: elastic-7.x.list
+        filename: elastic-8.x.list
         update_cache: yes
 
-    - name: Update repositories cache and install {{ stack }}
+    - name: Install {{ stack }}
       apt:
         name: "{{ stack }}"
         update_cache: yes
+
+    # - name: Download Elastic Deb Package
+    #   get_url:
+    #     url: https://artifacts.elastic.co/downloads/{{ stack }}/{{ stack }}-8.3.3-amd64.deb
+    #     dest: /tmp
+
+    # - name: Install Elastic Deb Package
+    #   apt:
+    #     deb: /tmp/{{ stack }}-8.3.3-amd64.deb
       
-    - name: Enabling {{ stack }} service
+    - name: Enable {{ stack }} service
       service:
         name: "{{ stack }}"
         enabled: yes
         daemon_reload: yes
         
-    - name: Starting {{ stack }} service
+    - name: Start {{ stack }} service
       service:
         name: "{{ stack }}"
         state: started

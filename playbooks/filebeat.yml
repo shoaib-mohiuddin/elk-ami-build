@@ -3,14 +3,14 @@
   become: true
 
   tasks:
-    - name: update apt cache if needed
+    - name: update apt 
       apt:
         update_cache: yes
 
     - name: Install Java Runtime Environment 
       apt:
-       name: default-jre
-       state: present
+        name: default-jre
+        state: present
     
     - name: Download Filebeat Package
       get_url:
